@@ -1,0 +1,124 @@
+{
+  "trace_statistics": {
+    "total_instructions": 201609,
+    "instruction_types": {
+      "alu": 62969,
+      "system": 23,
+      "branch": 50107,
+      "store": 26888,
+      "load": 51871,
+      "unknown": 9719,
+      "fpu": 32
+    },
+    "unique_pcs": 1023,
+    "cycles": 67,
+    "branches": 50107,
+    "loads": 51871,
+    "stores": 26888
+  },
+  "sample_size": 10000,
+  "performance_results": {
+    "performance_breakdown": {
+      "total_instructions": 10000,
+      "total_cycles": 15214.500000000002,
+      "total_stall_cycles": 5214.500000000002,
+      "ipc": 0.6572677380130796,
+      "overall_throughput": 0.5861686390532544,
+      "stall_breakdown": {
+        "BranchPredictorModel": 1639.4000000000015,
+        "CacheModel": 889.5,
+        "ReorderBufferModel": 0.0,
+        "LoadStoreQueueModel": 2685.6,
+        "MemoryModel": 0.0
+      }
+    },
+    "model_results": {
+      "BranchPredictorModel": {
+        "latency": 2388.84,
+        "throughput": 0.5882352941176469,
+        "utilization": 0.2342,
+        "stall_cycles": 1639.4000000000015,
+        "additional_metrics": {
+          "prediction_accuracy": 0.95,
+          "misprediction_rate": 0.050000000000000044,
+          "branch_count": 2342,
+          "misprediction_count": 117
+        }
+      },
+      "CacheModel": {
+        "latency": 12172.0,
+        "throughput": 0.9183158088066486,
+        "utilization": 0.3252,
+        "stall_cycles": 889.5,
+        "additional_metrics": {
+          "l1_hit_rate": 0.9498769987699877,
+          "l2_hit_rate": 0.047355473554735544,
+          "l3_hit_rate": 0.0024600246002460025,
+          "memory_access_rate": 0.0003075030750307503,
+          "total_memory_accesses": 3252,
+          "l1_hits": 3089,
+          "l1_misses": 163,
+          "l2_hits": 154,
+          "l2_misses": 9,
+          "l3_hits": 8,
+          "l3_misses": 1
+        }
+      },
+      "ReorderBufferModel": {
+        "latency": 2500.0,
+        "throughput": 1.0,
+        "utilization": 0.009172395833333334,
+        "stall_cycles": 0.0,
+        "additional_metrics": {
+          "avg_rob_occupancy": 1.7611,
+          "max_rob_occupancy": 2.11332,
+          "rob_full_cycles": 0.0,
+          "retirement_rate": 4
+        }
+      },
+      "LoadStoreQueueModel": {
+        "latency": 10854.0,
+        "throughput": 0.5861686390532544,
+        "utilization": 0.03962933753943218,
+        "stall_cycles": 2685.6,
+        "additional_metrics": {
+          "avg_lsq_occupancy": 2.8533123028391167,
+          "load_count": 2350,
+          "store_count": 1454,
+          "dependency_stalls": 2685.6,
+          "capacity_stalls": 0.0
+        }
+      },
+      "MemoryModel": {
+        "latency": 325200,
+        "throughput": 1.0,
+        "utilization": 0.6984919309616089,
+        "stall_cycles": 0.0,
+        "additional_metrics": {
+          "bandwidth_usage_gbps": 17.881393432617188,
+          "bandwidth_utilization": 0.6984919309616089,
+          "memory_access_count": 3252,
+          "avg_memory_latency": 100.0
+        }
+      }
+    },
+    "trace_statistics": {
+      "alu": 3325,
+      "system": 20,
+      "branch": 2342,
+      "store": 1454,
+      "load": 2350,
+      "unknown": 477,
+      "fpu": 32
+    },
+    "config": {
+      "pipeline_width": 4,
+      "pipeline_depth": 14,
+      "rob_size": 192,
+      "lsq_size": 72,
+      "l1d_size": 32768,
+      "l2_size": 262144,
+      "l3_size": 8388608
+    }
+  }
+}

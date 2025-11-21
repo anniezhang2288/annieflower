@@ -1,0 +1,134 @@
+{
+  "trace_statistics": {
+    "total_instructions": 201609,
+    "instruction_types": {
+      "alu": 62969,
+      "system": 23,
+      "branch": 50107,
+      "store": 26888,
+      "load": 51871,
+      "unknown": 9719,
+      "fpu": 32
+    },
+    "unique_pcs": 1023,
+    "cycles": 67,
+    "branches": 50107,
+    "loads": 51871,
+    "stores": 26888
+  },
+  "performance_results": {
+    "performance_breakdown": {
+      "total_instructions": 50000,
+      "total_cycles": 76797.3,
+      "total_stall_cycles": 26797.300000000007,
+      "ipc": 0.6510645556549514,
+      "overall_throughput": 0.5759584378359011,
+      "stall_breakdown": {
+        "BranchPredictorModel": 8182.300000000007,
+        "CacheModel": 4413.0,
+        "ReorderBufferModel": 0.0,
+        "LoadStoreQueueModel": 14202.0,
+        "MemoryModel": 0.0
+      }
+    },
+    "model_results": {
+      "BranchPredictorModel": {
+        "latency": 11922.78,
+        "throughput": 0.5882352941176469,
+        "utilization": 0.23378,
+        "stall_cycles": 8182.300000000007,
+        "additional_metrics": {
+          "prediction_accuracy": 0.95,
+          "misprediction_rate": 0.050000000000000044,
+          "branch_count": 11689,
+          "misprediction_count": 584
+        }
+      },
+      "CacheModel": {
+        "latency": 61683.0,
+        "throughput": 0.9188980574495066,
+        "utilization": 0.33162,
+        "stall_cycles": 4413.0,
+        "additional_metrics": {
+          "l1_hit_rate": 0.9499427055063024,
+          "l2_hit_rate": 0.047524274772329775,
+          "l3_hit_rate": 0.0023520897412701285,
+          "memory_access_rate": 0.0001809299800977022,
+          "total_memory_accesses": 16581,
+          "l1_hits": 15751,
+          "l1_misses": 830,
+          "l2_hits": 788,
+          "l2_misses": 42,
+          "l3_hits": 39,
+          "l3_misses": 3
+        }
+      },
+      "ReorderBufferModel": {
+        "latency": 12500.0,
+        "throughput": 1.0,
+        "utilization": 0.009303645833333334,
+        "stall_cycles": 0.0,
+        "additional_metrics": {
+          "avg_rob_occupancy": 1.7863,
+          "max_rob_occupancy": 2.14356,
+          "rob_full_cycles": 0.0,
+          "retirement_rate": 4
+        }
+      },
+      "LoadStoreQueueModel": {
+        "latency": 55998.0,
+        "throughput": 0.5759584378359011,
+        "utilization": 0.04031881804043546,
+        "stall_cycles": 14202.0,
+        "additional_metrics": {
+          "avg_lsq_occupancy": 2.902954898911353,
+          "load_count": 12236,
+          "store_count": 7054,
+          "dependency_stalls": 14202.0,
+          "capacity_stalls": 0.0
+        }
+      },
+      "MemoryModel": {
+        "latency": 1658100,
+        "throughput": 1.0,
+        "utilization": 0.6984919309616089,
+        "stall_cycles": 0.0,
+        "additional_metrics": {
+          "bandwidth_usage_gbps": 17.881393432617188,
+          "bandwidth_utilization": 0.6984919309616089,
+          "memory_access_count": 16581,
+          "avg_memory_latency": 100.0
+        }
+      }
+    },
+    "trace_statistics": {
+      "alu": 16446,
+      "system": 20,
+      "branch": 11689,
+      "store": 7054,
+      "load": 12236,
+      "unknown": 2523,
+      "fpu": 32
+    },
+    "config": {
+      "pipeline_width": 4,
+      "pipeline_depth": 14,
+      "rob_size": 192,
+      "lsq_size": 72,
+      "l1d_size": 32768,
+      "l2_size": 262144,
+      "l3_size": 8388608
+    }
+  },
+  "sample_size": 50000,
+  "recommendations": [
+    "\ud83d\udd27 Primary bottleneck is LSQ - consider:",
+    "   \u2022 Increase LSQ size (current: 72 entries)",
+    "   \u2022 Improve store-to-load forwarding",
+    "   \u2022 Better memory disambiguation",
+    "\n\ud83d\udcc8 Overall IPC is 0.651 - potential improvements:",
+    "   \u2022 Wider pipeline (current: 4-wide)",
+    "   \u2022 More execution units",
+    "   \u2022 Better instruction scheduling"
+  ]
+}
