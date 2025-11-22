@@ -4,10 +4,17 @@ Run this script to see how everything works together.
 """
 
 import json
+import sys
 from pathlib import Path
-from analytical import MicroarchConfig
-from performance_model import PerformanceModelFramework
-from trace_processor import TacitTraceProcessor
+
+# Add project root to path
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+# Import from src package
+from src.analytical import MicroarchConfig
+from src.performance_model import PerformanceModelFramework
+from src.trace_processor import TacitTraceProcessor
 
 
 def step_1_create_test_trace():
@@ -16,8 +23,12 @@ def step_1_create_test_trace():
     print("STEP 1: Creating a Test Instruction Trace")
     print("=" * 70)
     
+    # Get project root
+    project_root = Path(__file__).parent.parent
+    
     # Create traces directory if it doesn't exist
-    Path("traces").mkdir(exist_ok=True)
+    traces_dir = project_root / "traces"
+    traces_dir.mkdir(exist_ok=True)
     
     # Create a realistic trace with various instruction types
     trace = []
@@ -61,7 +72,7 @@ def step_1_create_test_trace():
             })
     
     # Save trace
-    trace_file = "traces/walkthrough_trace.json"
+    trace_file = traces_dir / "walkthrough_trace.json"
     with open(trace_file, "w") as f:
         json.dump(trace, f, indent=2)
     
@@ -70,7 +81,7 @@ def step_1_create_test_trace():
     print(f"  Instruction types: load, alu, store, branch")
     print()
     
-    return trace_file
+    return str(trace_file)
 
 
 def step_2_validate_trace(trace_file):

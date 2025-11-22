@@ -3,20 +3,48 @@ Analyze RISC-V instruction trace and run through performance models.
 """
 
 import json
+import sys
 from pathlib import Path
-from trace_parser_riscv import RISCVTraceParser
-from analytical import MicroarchConfig
-from performance_model import PerformanceModelFramework
+
+# Add project root to path
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+# Import from src package
+from src.trace_parser_riscv import RISCVTraceParser
+from src.analytical import MicroarchConfig
+from src.performance_model import PerformanceModelFramework
 
 
-def analyze_riscv_trace(trace_file: str, output_dir: str = "results"):
+def analyze_riscv_trace(trace_file: str, output_dir: str = None):
     """
     Analyze a RISC-V trace file.
     
     Args:
-        trace_file: Path to RISC-V trace file
-        output_dir: Directory to save results
+        trace_file: Path to RISC-V trace file (relative to project root or absolute)
+        output_dir: Directory to save results (default: project_root/results)
     """
+    # Get project root
+    project_root = Path(__file__).parent.parent
+    
+    # Resolve trace file path
+    trace_path = Path(trace_file)
+    if not trace_path.is_absolute():
+        trace_path = project_root / trace_path
+    
+    # Set default output directory
+    if output_dir is None:
+        output_dir = project_root / "results"
+    else:
+        output_dir = Path(output_dir)
+        if not output_dir.is_absolute():
+            output_dir = project_root / output_dir
+    
+    output_dir.mkdir(exist_ok=True)
+    
+    # Update trace_file to use resolved path
+    trace_file = str(trace_path)
+    
     print("=" * 70)
     print("RISC-V Trace Analysis")
     print("=" * 70)
@@ -65,8 +93,8 @@ def analyze_riscv_trace(trace_file: str, output_dir: str = "results"):
         standard_trace.append(standard_entry)
     
     # Save converted trace
-    Path(output_dir).mkdir(exist_ok=True)
-    converted_trace_file = Path(output_dir) / "converted_trace.json"
+    output_dir.mkdir(exist_ok=True)
+    converted_trace_file = output_dir / "converted_trace.json"
     with open(converted_trace_file, 'w') as f:
         json.dump(standard_trace, f, indent=2)
     
@@ -158,7 +186,7 @@ def analyze_riscv_trace(trace_file: str, output_dir: str = "results"):
             print(f"  Percentage: {(max_stall[1] / perf['total_stall_cycles'] * 100):.1f}%")
     
     # Save results
-    results_file = Path(output_dir) / "performance_results.json"
+    results_file = output_dir / "performance_results.json"
     with open(results_file, 'w') as f:
         json.dump({
             'trace_statistics': stats,
@@ -188,19 +216,20 @@ def analyze_riscv_trace(trace_file: str, output_dir: str = "results"):
 
 def main():
     """Main analysis function."""
-    trace_file = "data/dhrystone.riscv.out.out"
+    project_root = Path(__file__).parent.parent
+    trace_file = project_root / "data" / "dhrystone.riscv.out.out"
     
-    if not Path(trace_file).exists():
+    if not trace_file.exists():
         print(f"Error: Trace file not found: {trace_file}")
         return
     
     try:
-        results, stats = analyze_riscv_trace(trace_file)
+        results, stats = analyze_riscv_trace(str(trace_file))
         print(f"\n{'='*70}")
         print("Analysis Complete!")
         print(f"{'='*70}")
         print("\nNext steps:")
-        print("  1. Review results in results/performance_results.json")
+        print(f"  1. Review results in {project_root / 'results' / 'performance_results.json'}")
         print("  2. Adjust microarchitectural parameters in analyze_trace.py")
         print("  3. Run full trace analysis (modify sample_size)")
         print("  4. Compare different configurations")

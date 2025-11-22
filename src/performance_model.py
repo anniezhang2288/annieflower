@@ -8,7 +8,7 @@ from typing import List, Dict, Any, Optional
 import json
 from pathlib import Path
 
-from analytical import (
+from .analytical import (
     MicroarchConfig,
     BranchPredictorModel,
     CacheModel,
@@ -17,7 +17,7 @@ from analytical import (
     MemoryModel,
     PerformanceMetrics
 )
-from trace_processor import TacitTraceProcessor
+from .trace_processor import TacitTraceProcessor
 
 
 class PerformanceModelFramework:

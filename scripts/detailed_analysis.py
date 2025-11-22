@@ -3,14 +3,35 @@ Detailed analysis of the dhrystone trace with visualizations and insights.
 """
 
 import json
+import sys
 from pathlib import Path
-from trace_parser_riscv import RISCVTraceParser
-from analytical import MicroarchConfig
-from performance_model import PerformanceModelFramework
+
+# Add project root to path
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+# Import from src package
+from src.trace_parser_riscv import RISCVTraceParser
+from src.analytical import MicroarchConfig
+from src.performance_model import PerformanceModelFramework
 
 
-def detailed_analysis(trace_file: str = "data/dhrystone.riscv.out.out"):
+def detailed_analysis(trace_file: str = None):
     """Perform detailed analysis with insights."""
+    # Get project root
+    project_root = Path(__file__).parent.parent
+    
+    # Set default trace file if not provided
+    if trace_file is None:
+        trace_file = project_root / "data" / "dhrystone.riscv.out.out"
+    else:
+        trace_path = Path(trace_file)
+        if not trace_path.is_absolute():
+            trace_file = project_root / trace_path
+        else:
+            trace_file = trace_path
+    
+    trace_file = str(trace_file)
     
     print("=" * 70)
     print("DETAILED TRACE ANALYSIS: Dhrystone Benchmark")
@@ -250,11 +271,13 @@ def detailed_analysis(trace_file: str = "data/dhrystone.riscv.out.out"):
         'recommendations': recommendations
     }
     
-    Path("results").mkdir(exist_ok=True)
-    with open("results/detailed_analysis.json", 'w') as f:
+    results_dir = project_root / "results"
+    results_dir.mkdir(exist_ok=True)
+    results_file = results_dir / "detailed_analysis.json"
+    with open(results_file, 'w') as f:
         json.dump(report, f, indent=2)
     
-    print(f"\n✓ Detailed analysis saved to: results/detailed_analysis.json")
+    print(f"\n✓ Detailed analysis saved to: {results_file}")
     
     return results, stats
 

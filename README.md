@@ -68,8 +68,9 @@ pip install -r requirements.txt
 ### Basic Usage
 
 ```python
-from analytical import MicroarchConfig
-from performance_model import PerformanceModelFramework
+# Import from src package
+from src.analytical import MicroarchConfig
+from src.performance_model import PerformanceModelFramework
 
 # Create microarchitectural configuration
 config = MicroarchConfig(
@@ -127,6 +128,8 @@ comparison = framework.compare_configurations(
 ### Bottleneck Analysis
 
 ```python
+from src.performance_model import PerformanceModelFramework
+
 framework = PerformanceModelFramework()
 analysis = framework.get_bottleneck_analysis("traces/example_trace.txt")
 
@@ -220,7 +223,7 @@ The `MicroarchConfig` class supports:
 1. Create a new model class inheriting from `BasePerformanceModel`:
 
 ```python
-from analytical.base_model import BasePerformanceModel, PerformanceMetrics
+from src.analytical.base_model import BasePerformanceModel, PerformanceMetrics
 
 class MyModel(BasePerformanceModel):
     def process_trace(self, trace_data):
